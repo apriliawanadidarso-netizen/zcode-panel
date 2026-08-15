@@ -1,0 +1,104 @@
+{
+  "name": "zcode-panel",
+  "displayName": "ZCode Panel",
+  "description": "Chat sidebar for VS Code connected to the GLM Coding Plan (Z.ai) API, with SSE streaming, file context, and markdown export.",
+  "version": "0.1.0",
+  "publisher": "zcode",
+  "license": "MIT",
+  "readme": "README.md",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "AI",
+    "Chat",
+    "Other"
+  ],
+  "keywords": [
+    "z.ai",
+    "glm",
+    "ai",
+    "chat",
+    "assistant"
+  ],
+  "activationEvents": [
+    "onView:zcode.chat"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "zcode",
+          "title": "ZCode",
+          "icon": "media/zcode.svg"
+        }
+      ]
+    },
+    "views": {
+      "zcode": [
+        {
+          "type": "webview",
+          "id": "zcode.chat",
+          "name": "Chat"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "zcode.openPanel",
+        "title": "Open Panel",
+        "category": "ZCode"
+      },
+      {
+        "command": "zcode.clearChat",
+        "title": "Clear Chat",
+        "category": "ZCode"
+      },
+      {
+        "command": "zcode.exportChat",
+        "title": "Export Chat to Markdown",
+        "category": "ZCode"
+      },
+      {
+        "command": "zcode.addFileContext",
+        "title": "Attach Active File as Context",
+        "category": "ZCode"
+      }
+    ],
+    "configuration": {
+      "title": "ZCode",
+      "properties": {
+        "zcode.baseUrl": {
+          "type": "string",
+          "default": "https://api.z.ai/api/coding/paas/v4",
+          "description": "Base URL of the OpenAI-compatible GLM Coding Plan endpoint.",
+          "order": 1
+        },
+        "zcode.model": {
+          "type": "string",
+          "default": "glm-5.3",
+          "markdownDescription": "Model ID to use. The default `glm-5.3` has a 1,000,000-token context window.",
+          "order": 2
+        },
+        "zcode.apiKey": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Z.ai API key. Leave empty to be prompted on first use (the key is then stored in your user settings).",
+          "order": 3
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "npm run compile && vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/vscode": "^1.90.0",
+    "typescript": "^5.4.5"
+  }
+}
