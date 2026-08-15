@@ -1,43 +1,43 @@
 # ZCode Panel for VS Code
 
-Chat sidebar untuk VS Code yang terhubung ke **GLM Coding Plan (Z.ai)** dengan respons streaming (SSE, OpenAI-compatible). Dibangun dengan TypeScript + webview polos tanpa framework, tanpa dependency runtime.
+A VS Code sidebar chat connected to the **GLM Coding Plan (Z.ai)** with streaming responses (SSE, OpenAI-compatible). Built with TypeScript and a plain webview — no framework, no runtime dependencies.
 
-> 📷 **Screenshot placeholder** — panel chat ZCode di sidebar VS Code (dokumentasikan di `docs/screenshot.png` saat dipublikasikan).
+> 📷 **Screenshot placeholder** — the ZCode chat panel in the VS Code sidebar (document it in `docs/screenshot.png` when publishing).
 
-## Fitur
+## Features
 
-- **Panel chat "ZCode" di Activity Bar** — input chat + output streaming real-time (delta per token).
-- **Konfigurasi via settings** — `zcode.baseUrl`, `zcode.model`, `zcode.apiKey`. API key tidak pernah di-hardcode; bila kosong, Anda akan diprompt sekali saat pertama mengirim pesan dan key disimpan ke user settings.
+- **"ZCode" chat panel in the Activity Bar** — chat input with real-time streaming output (token by token).
+- **Settings-driven configuration** — `zcode.baseUrl`, `zcode.model`, `zcode.apiKey`. The API key is never hardcoded; if it is empty, you are prompted once on your first message and the key is saved to your user settings.
 - **Commands**
-  - `ZCode: Open Panel` — buka/fokus panel chat.
-  - `ZCode: Clear Chat` — kosongkan percakapan.
-  - `ZCode: Export Chat to Markdown` — simpan seluruh percakapan ke file `.md`.
-  - `ZCode: Attach Active File as Context` — lampirkan isi file di editor aktif sebagai konteks pesan berikutnya (chip konteks muncul di panel, bisa dihapus satu per satu, otomatis terkonsumsi setelah pesan terkirim).
-- **Status bar item** — menampilkan model aktif (mis. `glm-5.3`); klik untuk membuka panel.
-- **Error handling di panel** — API key invalid (401/403), rate limit (429), kegagalan jaringan, dan error HTTP lain ditampilkan sebagai pesan error yang jelas di dalam panel, bukan hanya di konsol. Tombol **Stop** tersedia saat streaming.
+  - `ZCode: Open Panel` — open/focus the chat panel.
+  - `ZCode: Clear Chat` — clear the conversation.
+  - `ZCode: Export Chat to Markdown` — save the whole conversation to a `.md` file.
+  - `ZCode: Attach Active File as Context` — attach the contents of the active editor file as context for your next message (context chips appear in the panel, can be removed individually, and are consumed automatically once the message is sent).
+- **Status bar item** — shows the active model (e.g. `glm-5.3`); click it to open the panel.
+- **In-panel error handling** — invalid API key (401/403), rate limit (429), network failures, and other HTTP errors are shown as clear error messages inside the panel, not just in the console. A **Stop** button is available while streaming.
 
-## Cara pakai
+## Usage
 
-1. Install extension (dari `.vsix`: `code --install-extension zcode-panel-0.1.0.vsix`).
-2. Klik ikon **ZCode** di Activity Bar (atau jalankan `ZCode: Open Panel`).
-3. Saat pertama mengirim pesan, masukkan API key GLM Coding Plan Anda — key disimpan di setting `zcode.apiKey`.
-4. (Opsional) Buka file, jalankan `ZCode: Attach Active File as Context`, lalu kirim pertanyaan tentang file tersebut.
+1. Install the extension (from the `.vsix`: `code --install-extension zcode-panel-0.1.0.vsix`).
+2. Click the **ZCode** icon in the Activity Bar (or run `ZCode: Open Panel`).
+3. When sending your first message, enter your GLM Coding Plan API key — it is stored in the `zcode.apiKey` setting.
+4. (Optional) Open a file, run `ZCode: Attach Active File as Context`, then ask a question about that file.
 
-## Konfigurasi
+## Configuration
 
-| Setting | Default | Keterangan |
+| Setting | Default | Description |
 | --- | --- | --- |
-| `zcode.baseUrl` | `https://api.z.ai/api/coding/paas/v4` | Base URL endpoint OpenAI-compatible. |
-| `zcode.model` | `glm-5.3` | ID model (context window 1.000.000 token). |
-| `zcode.apiKey` | _(kosong)_ | API key Z.ai; dikosongkan akan memunculkan prompt saat pertama dipakai. |
+| `zcode.baseUrl` | `https://api.z.ai/api/coding/paas/v4` | Base URL of the OpenAI-compatible endpoint. |
+| `zcode.model` | `glm-5.3` | Model ID (1,000,000-token context window). |
+| `zcode.apiKey` | _(empty)_ | Z.ai API key; when empty, a prompt appears on first use. |
 
-## Pengembangan
+## Development
 
 ```bash
 npm install
 npm run compile        # tsc → out/
-# F5 di VS Code (konfigurasi launch "Run ZCode Panel Extension") untuk Extension Development Host
+# Press F5 in VS Code ("Run ZCode Panel Extension" launch config) for the Extension Development Host
 npm run package        # compile + vsce package → .vsix
 ```
 
-Struktur singkat: `src/extension.ts` (aktivasi, commands, status bar), `src/panel.ts` (webview provider + state chat), `src/glm.ts` (klien streaming SSE via `fetch` + `ReadableStream`), `src/config.ts` (settings + prompt API key).
+Brief structure: `src/extension.ts` (activation, commands, status bar), `src/panel.ts` (webview provider + chat state), `src/glm.ts` (SSE streaming client via `fetch` + `ReadableStream`), `src/config.ts` (settings + API key prompt).
