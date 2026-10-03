@@ -1,5 +1,7 @@
 # ZCode Panel for VS Code
 
+[![AIClub.id Builder](https://aiclub.id/badge/s00_01M3YB51Y4N028APQ28PJ19RDJ.svg?style=pill&theme=dark)](https://aiclub.id/builder/s00_01M3YB51Y4N028APQ28PJ19RDJ)
+
 A VS Code sidebar chat connected to the **GLM Coding Plan (Z.ai)** with streaming responses (SSE, OpenAI-compatible). Built with TypeScript and a plain webview — no framework, no runtime dependencies.
 
 > 📷 **Screenshot placeholder** — the ZCode chat panel in the VS Code sidebar (document it in `docs/screenshot.png` when publishing).
